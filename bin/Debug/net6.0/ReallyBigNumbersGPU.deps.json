@@ -1,0 +1,60 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "ReallyBigNumbersGPU/1.0.0": {
+        "dependencies": {
+          "ILGPU": "1.4.0-rc1",
+          "ILGPU.Algorithms": "1.4.0-rc1"
+        },
+        "runtime": {
+          "ReallyBigNumbersGPU.dll": {}
+        }
+      },
+      "ILGPU/1.4.0-rc1": {
+        "runtime": {
+          "lib/net6.0/ILGPU.dll": {
+            "assemblyVersion": "1.4.0.0",
+            "fileVersion": "1.4.0.0"
+          }
+        }
+      },
+      "ILGPU.Algorithms/1.4.0-rc1": {
+        "dependencies": {
+          "ILGPU": "1.4.0-rc1"
+        },
+        "runtime": {
+          "lib/net6.0/ILGPU.Algorithms.dll": {
+            "assemblyVersion": "1.4.0.0",
+            "fileVersion": "1.4.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ReallyBigNumbersGPU/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ILGPU/1.4.0-rc1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yK934XOeDrfhRgLzg7aX5iN8iJK9nkkSsBbdyzxsR1kY2A585DfMAJiHH5ZRy/mcHYREmXkve4J5w2muaJQrAw==",
+      "path": "ilgpu/1.4.0-rc1",
+      "hashPath": "ilgpu.1.4.0-rc1.nupkg.sha512"
+    },
+    "ILGPU.Algorithms/1.4.0-rc1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-P4BJlh5ntip+EX22K/yRVDJk9fll44OJygaHo3cb+fUSXOjBFFbOmA++L2SdhSAOHB38GM1wYdw0/ANokz7PqA==",
+      "path": "ilgpu.algorithms/1.4.0-rc1",
+      "hashPath": "ilgpu.algorithms.1.4.0-rc1.nupkg.sha512"
+    }
+  }
+}

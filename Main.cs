@@ -12,10 +12,23 @@ namespace ReallyBigNumbersGPU
     {
         public static void Main(string[] args)
         {
-            
+
             Context context = Context.CreateDefault();
-            Accelerator accelerator = context.GetPreferredDevice(preferCPU: false)
-                                      .CreateAccelerator(context);
+
+            Accelerator accelerator;
+            try
+            {
+                accelerator = context.GetPreferredDevice(preferCPU: false)
+                                          .CreateAccelerator(context);
+            }
+            catch (ILGPU.Runtime.OpenCL.CLException)
+            {
+                accelerator = context.GetCudaDevice(0).CreateAccelerator(context);
+            }
+            catch (ILGPU.Runtime.Cuda.CudaException)
+            {
+                accelerator = context.GetCPUDevice(0).CreateCPUAccelerator(context);
+            }
 
             Console.WriteLine(GetInfoString(accelerator));
         }

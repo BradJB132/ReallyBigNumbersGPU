@@ -3,6 +3,7 @@ using ILGPU.Runtime;
 using ILGPU.Runtime.CPU;
 using ILGPU.Runtime.Cuda;
 using ILGPU.Runtime.OpenCL;
+using ILGPU.Algorithms;
 using System;
 using System.IO;
 
@@ -13,7 +14,7 @@ namespace ReallyBigNumbersGPU
         public static void Main(string[] args)
         {
 
-            Context context = Context.CreateDefault();
+            Context context = Context.Create(builder => builder.Default().EnableAlgorithms());
 
             Accelerator accelerator;
             try
@@ -29,8 +30,9 @@ namespace ReallyBigNumbersGPU
             {
                 accelerator = context.GetCPUDevice(0).CreateCPUAccelerator(context);
             }
-
             Console.WriteLine(GetInfoString(accelerator));
+
+
         }
 
         private static string GetInfoString(Accelerator a)

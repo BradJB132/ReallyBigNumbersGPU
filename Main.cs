@@ -32,9 +32,11 @@ namespace ReallyBigNumbersGPU
             }
             Console.WriteLine(GetInfoString(accelerator));
 
-
+            BigNumbers bigNumbers = new BigNumbers(accelerator);
+            bigNumbers.GenerateBigNumber("C:\\Users\\Brad\\Desktop\\test.txt", 1);
         }
 
+        
         private static string GetInfoString(Accelerator a)
         {
             StringWriter infoString = new StringWriter();

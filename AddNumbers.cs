@@ -21,9 +21,7 @@ namespace ReallyBigNumbersGPU
             this.accelerator = accelerator;
         }
 
-        private
-
-        public int generateBigNumber(String fileName, long sizeKB)
+        public int GenerateBigNumber(String fileName, long sizeKB)
         {
             if(File.Exists(fileName))
             {
@@ -40,8 +38,10 @@ namespace ReallyBigNumbersGPU
             {
                 rng.FillUniform(accelerator.DefaultStream, buffer.View);
                 var randValues = buffer.GetAsArray1D();
-                foreach( var randValue in randValues) { streamWriter.WriteLine(randValue.ToString()); }
+                foreach( var randValue in randValues) { streamWriter.Write(Math.Abs(randValue).ToString()); }
             }
+            streamWriter.Close();
+            return 1;
 
         }
 

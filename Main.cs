@@ -32,6 +32,7 @@ namespace ReallyBigNumbersGPU
                 accelerator = context.GetCPUDevice(0).CreateCPUAccelerator(context);
             }
             Console.WriteLine(GetInfoString(accelerator));
+
             Stopwatch stopwatch = Stopwatch.StartNew();
             BigNumbers bigNumbers = new BigNumbers(accelerator);
             bigNumbers.GenerateBigNumber("C:\\Users\\Brad\\Desktop\\realtest.txt", 1500);

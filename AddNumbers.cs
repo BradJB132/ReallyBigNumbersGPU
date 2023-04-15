@@ -34,9 +34,9 @@ namespace ReallyBigNumbersGPU
             var random = new Random();
             using var rng = RNG.Create<XorShift128Plus>(accelerator, random);
 
-            using var buffer = accelerator.Allocate1D<long>(16);
+            using var buffer = accelerator.Allocate1D<long>(4096);
             long sizeGuess = 0;
-            while (sizeGuess < sizeKB * 1024)
+            while (sizeGuess < sizeKB * 855000)
             {
                 rng.FillUniform(accelerator.DefaultStream, buffer.View);
                 var randValues = buffer.GetAsArray1D();

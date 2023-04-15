@@ -6,6 +6,7 @@ using ILGPU.Runtime.OpenCL;
 using ILGPU.Algorithms;
 using System;
 using System.IO;
+using System.Diagnostics;
 
 namespace ReallyBigNumbersGPU
 {
@@ -31,9 +32,12 @@ namespace ReallyBigNumbersGPU
                 accelerator = context.GetCPUDevice(0).CreateCPUAccelerator(context);
             }
             Console.WriteLine(GetInfoString(accelerator));
-
+            Stopwatch stopwatch = Stopwatch.StartNew();
             BigNumbers bigNumbers = new BigNumbers(accelerator);
-            bigNumbers.GenerateBigNumber("C:\\Users\\Brad\\Desktop\\test.txt", 1);
+            bigNumbers.GenerateBigNumber("C:\\Users\\Brad\\Desktop\\realtest.txt", 1500);
+            stopwatch.Stop();
+            TimeSpan ts = stopwatch.Elapsed;
+            Console.WriteLine("Runtime= " + ts.Seconds + "." + ts.Milliseconds);
         }
 
         

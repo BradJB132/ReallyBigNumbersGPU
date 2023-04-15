@@ -35,7 +35,9 @@ namespace ReallyBigNumbersGPU
 
             Stopwatch stopwatch = Stopwatch.StartNew();
             BigNumbers bigNumbers = new BigNumbers(accelerator);
-            bigNumbers.GenerateBigNumber("C:\\Users\\Brad\\Desktop\\realtest.txt", 1500);
+            bigNumbers.GenerateBigNumber("C:\\Users\\Brad\\Desktop\\realtest.txt", 1);
+            bigNumbers.GenerateBigNumber("C:\\Users\\Brad\\Desktop\\realtest2.txt", 1);
+            bigNumbers.GenerateBigNumber("C:\\Users\\Brad\\Desktop\\realtest3.txt", 1);
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
             Console.WriteLine("Runtime= " + ts.Seconds + "." + ts.Milliseconds);

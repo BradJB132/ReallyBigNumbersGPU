@@ -23,6 +23,7 @@ namespace ReallyBigNumbersGPU
 
         public int GenerateBigNumber(String fileName, long sizeKB)
         {
+
             if(File.Exists(fileName))
             {
                 return 0;
@@ -34,11 +35,12 @@ namespace ReallyBigNumbersGPU
             using var rng = RNG.Create<XorShift128Plus>(accelerator, random);
 
             using var buffer = accelerator.Allocate1D<long>(16);
-            while (fileInfo.Length < sizeKB * 1024)
+            long sizeGuess = 0;
+            while (sizeGuess < sizeKB * 1024)
             {
                 rng.FillUniform(accelerator.DefaultStream, buffer.View);
                 var randValues = buffer.GetAsArray1D();
-                foreach( var randValue in randValues) { streamWriter.Write(Math.Abs(randValue).ToString()); }
+                foreach( var randValue in randValues) { streamWriter.Write(Math.Abs(randValue).ToString()); sizeGuess += 15; }
             }
             streamWriter.Close();
             return 1;

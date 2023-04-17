@@ -39,8 +39,9 @@ namespace ReallyBigNumbersGPU
             Stopwatch stopwatch = Stopwatch.StartNew();
             BigNumbers bigNumbers = new BigNumbers(accelerator);
             bigNumbers.GenerateBigNumber(number1, 1);
-            bigNumbers.GenerateBigNumber(number2, 1);
+            //bigNumbers.GenerateBigNumber(number2, 1);
             //bigNumbers.AddBigNumber(number1, number2, number3);
+            bigNumbers.testReadAndConv(number1);
             
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;

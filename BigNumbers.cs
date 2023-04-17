@@ -54,7 +54,7 @@ namespace ReallyBigNumbersGPU
         public int AddBigNumber(String inFile1, String inFile2, String outFile)
         {
 
-            static void KernelAddNumber(Index1D index, ArrayView1D<long, Stride1D.Dense> inData1, ArrayView1D<long, Stride1D.Dense> inData2, ArrayView1D<long, Stride1D.Dense> carryData, ArrayView1D<long, Stride1D.Dense> outData)
+            static void KernelAddNumber(Index1D index, ArrayView<long> inData1, ArrayView<long> inData2, ArrayView<long> carryData, ArrayView<long> outData)
             {
                 outData[index] = inData1[index] + inData2[index] + carryData[index];
                 if (outData[index].ToString().Length > Math.Max(inData1[index], inData2[index]).ToString().Length)
@@ -65,7 +65,7 @@ namespace ReallyBigNumbersGPU
                 else carryData[index] = 0;
             }
 
-            static void KernelRecurseCarry(Index1D index, ArrayView1D<long, Stride1D.Dense> numbers, ArrayView1D<long, Stride1D.Dense> carry, byte length)
+            static void KernelRecurseCarry(Index1D index, ArrayView<long> numbers, ArrayView<long> carry, byte length)
             {
                 numbers[index] += carry[index];
                 if(!(numbers[index].ToString().Length > length))
@@ -94,10 +94,24 @@ namespace ReallyBigNumbersGPU
             MemoryBuffer1D<long, Stride1D.Dense> bigNumber;
             MemoryBuffer1D<long, Stride1D.Dense> smallNumber;
 
+            Action<Index1D, ArrayView<long>, ArrayView<long>, ArrayView<long>, ArrayView<long>> addNumber = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<long>, ArrayView<long>, ArrayView<long>, ArrayView<long>>(KernelAddNumber);
+            Action<Index1D, ArrayView<long>, ArrayView<long>, byte> recurseCarry = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<long>, ArrayView<long>, byte>(KernelRecurseCarry);
             //Add numbers together with carries
+            while(!bigReader.EndOfStream || !smallReader.EndOfStream)
+            {
+             
 
-
+            }
+            return 1;
         } 
+
+        public void testReadAndConv(String infile)
+        {
+            StreamReader streamReader = new StreamReader(infile);
+            char[] test = new char[16];
+            Console.WriteLine(test);
+
+        }
 
     }
 }

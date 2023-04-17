@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "traZmEyN62bA/daMFq6LFzdAEk8zW1nDKOfakkEEkGx/YDt9ZD78IpIURI7wsPSQGSkXYvegFvHhn/GC6sUsNQ==",
+  "dgSpecHash": "mGhXWhWDb6YT4CFlFpNlgYFNgLxhI4Qva871yPGkXwpW1ncx/HnBzV1ROggs3ptIv6qPqHKb46nReczzMzFGcw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Brad\\source\\repos\\BradJB132\\ReallyBigNumbersGPU\\ReallyBigNumbersGPU.csproj",
+  "projectFilePath": "C:\\Users\\bjbau\\source\\repos\\BradJB132\\ReallyBigNumbersGPU\\ReallyBigNumbersGPU.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Brad\\.nuget\\packages\\ilgpu\\1.4.0-rc1\\ilgpu.1.4.0-rc1.nupkg.sha512",
-    "C:\\Users\\Brad\\.nuget\\packages\\ilgpu.algorithms\\1.4.0-rc1\\ilgpu.algorithms.1.4.0-rc1.nupkg.sha512"
+    "C:\\Users\\bjbau\\.nuget\\packages\\ilgpu\\1.4.0-rc1\\ilgpu.1.4.0-rc1.nupkg.sha512",
+    "C:\\Users\\bjbau\\.nuget\\packages\\ilgpu.algorithms\\1.4.0-rc1\\ilgpu.algorithms.1.4.0-rc1.nupkg.sha512"
   ],
   "logs": []
 }

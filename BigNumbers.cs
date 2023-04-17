@@ -44,6 +44,8 @@ namespace ReallyBigNumbersGPU
                 var randValues = buffer.GetAsArray1D();
                 foreach( var randValue in randValues) { streamWriter.Write(Math.Abs(randValue).ToString()); sizeGuess += 18; }
             }
+            buffer.Dispose();
+            rng.Dispose();
             streamWriter.Close();
             return 1;
 
@@ -52,23 +54,47 @@ namespace ReallyBigNumbersGPU
         public int AddBigNumber(String inFile1, String inFile2, String outFile)
         {
 
-            static void KernelSuperMath(Index1D index, ArrayView1D<long, Stride1D.Dense> inData1, ArrayView1D<long, Stride1D.Dense> inData2, ArrayView1D<long, Stride1D.Dense> carryData, ArrayView1D<long, Stride1D.Dense> outData)
+            static void KernelAddNumber(Index1D index, ArrayView1D<long, Stride1D.Dense> inData1, ArrayView1D<long, Stride1D.Dense> inData2, ArrayView1D<long, Stride1D.Dense> carryData, ArrayView1D<long, Stride1D.Dense> outData)
             {
                 outData[index] = inData1[index] + inData2[index] + carryData[index];
                 if (outData[index].ToString().Length > Math.Max(inData1[index], inData2[index]).ToString().Length)
+                {
+                    outData[index] = (long)(carryData[index] % Math.Pow(10, outData[index].ToString().Length - 1));
                     carryData[index] = 1;
+                }
                 else carryData[index] = 0;
+            }
+
+            static void KernelRecurseCarry(Index1D index, ArrayView1D<long, Stride1D.Dense> numbers, ArrayView1D<long, Stride1D.Dense> carry, byte length)
+            {
+                numbers[index] += carry[index];
+                if(!(numbers[index].ToString().Length > length))
+                    carry[index] = 0;
             }
 
             if (File.Exists(outFile))
             {
                 return 0;
             }
-            StreamReader inReader1 = new StreamReader(inFile1);
-            StreamReader inReader2 = new StreamReader(inFile2);
+
             StreamWriter streamWriter = new StreamWriter(outFile);
 
-            using var buffer = accelerator.Allocate1D<long>(4096);
+            FileInfo info1 = new FileInfo(inFile1);
+            FileInfo info2 = new FileInfo(inFile2);
+
+            var biggerTemp = info1.Length >= info2.Length ? inFile1 : inFile2;
+            var smallerTemp = info1.Length < info2.Length ? inFile1 : inFile2;
+
+            StreamReader bigReader = new StreamReader(biggerTemp);
+            StreamReader smallReader = new StreamReader(smallerTemp);
+
+            FileInfo bigInfo = new FileInfo(biggerTemp);
+            FileInfo smallInfo = new FileInfo(smallerTemp);
+
+            MemoryBuffer1D<long, Stride1D.Dense> bigNumber;
+            MemoryBuffer1D<long, Stride1D.Dense> smallNumber;
+
+            //Add numbers together with carries
 
 
         } 

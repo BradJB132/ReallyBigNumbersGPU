@@ -109,8 +109,14 @@ namespace ReallyBigNumbersGPU
         {
             StreamReader streamReader = new StreamReader(infile);
             char[] test = new char[16];
-            Console.WriteLine(test);
+            streamReader.BaseStream.Seek(-16, SeekOrigin.End);
+            streamReader.ReadBlockAsync(test);
+            foreach(char c in test)
+                Console.WriteLine(c);
 
+            var numberTemp = new string(test);
+            long number = Convert.ToInt64(numberTemp);
+            Console.WriteLine(number);
         }
 
     }

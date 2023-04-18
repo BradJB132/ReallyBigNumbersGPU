@@ -56,20 +56,20 @@ namespace ReallyBigNumbersGPU
 
             static void KernelAddNumber(Index1D index, ArrayView<long> inData1, ArrayView<long> inData2, ArrayView<long> carryData, ArrayView<long> outData)
             {
-                outData[index] = inData1[index] + inData2[index] + carryData[index];
-                if (outData[index].ToString().Length > Math.Max(inData1[index], inData2[index]).ToString().Length)
+                outData[index] = inData1[index] + inData2[index];
+                if (outData[index].ToString().Length > 16 || outData[index].ToString().Length > Math.Max(inData1[index], inData2[index]).ToString().Length)
                 {
-                    outData[index] = (long)(carryData[index] % Math.Pow(10, outData[index].ToString().Length - 1));
-                    carryData[index] = 1;
+                    outData[index] = (long)(outData[index] - Math.Pow(10, outData[index].ToString().Length - 1));
+                    carryData[index + 1] = 1;
                 }
-                else carryData[index] = 0;
+                else carryData[index + 1] = 0;
             }
 
-            static void KernelRecurseCarry(Index1D index, ArrayView<long> numbers, ArrayView<long> carry, byte length)
+            static void KernelRecurseCarry(Index1D index, ArrayView<long> numbers, ArrayView<long> carry, ArrayView<long> newCarry)
             {
                 numbers[index] += carry[index];
-                if(!(numbers[index].ToString().Length > length))
-                    carry[index] = 0;
+                if((numbers[index].ToString().Length > 16))
+                    newCarry[index + 1] = 1;
             }
 
             if (File.Exists(outFile))
@@ -95,7 +95,7 @@ namespace ReallyBigNumbersGPU
             MemoryBuffer1D<long, Stride1D.Dense> smallNumber;
 
             Action<Index1D, ArrayView<long>, ArrayView<long>, ArrayView<long>, ArrayView<long>> addNumber = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<long>, ArrayView<long>, ArrayView<long>, ArrayView<long>>(KernelAddNumber);
-            Action<Index1D, ArrayView<long>, ArrayView<long>, byte> recurseCarry = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<long>, ArrayView<long>, byte>(KernelRecurseCarry);
+            Action<Index1D, ArrayView<long>, ArrayView<long>, ArrayView<long>> recurseCarry = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<long>, ArrayView<long>, ArrayView<long>>(KernelRecurseCarry);
             //Add numbers together with carries
             while(!bigReader.EndOfStream || !smallReader.EndOfStream)
             {
@@ -105,18 +105,19 @@ namespace ReallyBigNumbersGPU
             return 1;
         } 
 
-        public void testReadAndConv(String infile)
+        public long[] convertReadToLong(StreamReader streamReader, long position)
         {
-            StreamReader streamReader = new StreamReader(infile);
+            long[] ret = new long[4096];
             char[] test = new char[16];
-            streamReader.BaseStream.Seek(-16, SeekOrigin.End);
-            streamReader.ReadBlockAsync(test);
-            foreach(char c in test)
-                Console.WriteLine(c);
-
-            var numberTemp = new string(test);
-            long number = Convert.ToInt64(numberTemp);
-            Console.WriteLine(number);
+            for (long i = 0; i < 4096; i++)
+            {
+                streamReader.BaseStream.Seek(-16 + (i * -16), SeekOrigin.End);
+                streamReader.ReadBlock(test);
+                var testTemp = new string(test); 
+                long number = Convert.ToInt64(testTemp);
+                ret[i] = number;
+            }
+            return ret;
         }
 
     }

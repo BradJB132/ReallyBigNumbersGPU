@@ -49,7 +49,6 @@ namespace ReallyBigNumbersGPU
             rng.Dispose();
             streamWriter.Close();
             return 1;
-
         }
 
         public int AddBigNumber(String inFile1, String inFile2, String outFile)
@@ -58,9 +57,9 @@ namespace ReallyBigNumbersGPU
             static void KernelAddNumber(Index1D index, ArrayView1D<long, Stride1D.Dense> inData1, ArrayView1D<long, Stride1D.Dense> inData2, ArrayView1D<long, Stride1D.Dense> carryData, ArrayView1D<long, Stride1D.Dense> outData)
             {
                 outData[index] = inData1[index] + inData2[index];
-                if (outData[index].ToString().Length > 16 || outData[index].ToString().Length > Math.Max(inData1[index], inData2[index]).ToString().Length)
+                if (outData[index] > Math.Pow(10, 15) - 1)
                 {
-                    outData[index] = (long)(outData[index] - Math.Pow(10, outData[index].ToString().Length - 1));
+                    outData[index] -= (long)Math.Pow(10, 15);
                     carryData[index] = 1;
                 }
                 else carryData[index] = 0;
@@ -70,7 +69,7 @@ namespace ReallyBigNumbersGPU
             {
                 numbers[index] += carry[index];
                 carry[index] = 0;
-                if((numbers[index].ToString().Length > 16))
+                if((numbers[index] > Math.Pow(10, 15)))
                     carry[index] = 1;
             }
 
@@ -97,7 +96,6 @@ namespace ReallyBigNumbersGPU
             MemoryBuffer1D<long, Stride1D.Dense> smallNumber;
             MemoryBuffer1D<long, Stride1D.Dense> outNumber;
             MemoryBuffer1D<long, Stride1D.Dense> carryNum;
-            MemoryBuffer1D<long, Stride1D.Dense> carryTemp;
 
             Action<Index1D, ArrayView1D<long, Stride1D.Dense>, ArrayView1D<long, Stride1D.Dense>, ArrayView1D<long, Stride1D.Dense>, ArrayView1D<long, Stride1D.Dense>> addNumber = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView1D<long, Stride1D.Dense>, ArrayView1D<long, Stride1D.Dense>, ArrayView1D<long, Stride1D.Dense>, ArrayView1D<long, Stride1D.Dense>>(KernelAddNumber);
             Action<Index1D, ArrayView1D<long, Stride1D.Dense>, ArrayView1D<long, Stride1D.Dense>> recurseCarry = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView1D<long, Stride1D.Dense>, ArrayView1D<long, Stride1D.Dense>>(KernelRecurseCarry);
@@ -121,9 +119,12 @@ namespace ReallyBigNumbersGPU
                 //begin solving carries
                 while (carryShift.Contains(1))
                 {
+                    carryNum.CopyFromCPU<long>(carryShift);
                     recurseCarry((int)outNumber.Length, outNumber, carryNum);
-
+                    carryShift = carryNum.GetAsArray1D();
+                    carryShift = rightShift(carryShift);
                 }
+
             }
             return 1;
         } 

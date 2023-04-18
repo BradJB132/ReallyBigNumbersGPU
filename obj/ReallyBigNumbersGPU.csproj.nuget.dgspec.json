@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Brad\\source\\repos\\BradJB132\\ReallyBigNumbersGPU\\ReallyBigNumbersGPU.csproj": {}
+    "C:\\Users\\bjbau\\source\\repos\\BradJB132\\ReallyBigNumbersGPU\\ReallyBigNumbersGPU.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Brad\\source\\repos\\BradJB132\\ReallyBigNumbersGPU\\ReallyBigNumbersGPU.csproj": {
+    "C:\\Users\\bjbau\\source\\repos\\BradJB132\\ReallyBigNumbersGPU\\ReallyBigNumbersGPU.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Brad\\source\\repos\\BradJB132\\ReallyBigNumbersGPU\\ReallyBigNumbersGPU.csproj",
+        "projectUniqueName": "C:\\Users\\bjbau\\source\\repos\\BradJB132\\ReallyBigNumbersGPU\\ReallyBigNumbersGPU.csproj",
         "projectName": "ReallyBigNumbersGPU",
-        "projectPath": "C:\\Users\\Brad\\source\\repos\\BradJB132\\ReallyBigNumbersGPU\\ReallyBigNumbersGPU.csproj",
-        "packagesPath": "C:\\Users\\Brad\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Brad\\Source\\Repos\\BradJB132\\ReallyBigNumbersGPU\\obj\\",
+        "projectPath": "C:\\Users\\bjbau\\source\\repos\\BradJB132\\ReallyBigNumbersGPU\\ReallyBigNumbersGPU.csproj",
+        "packagesPath": "C:\\Users\\bjbau\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\bjbau\\source\\repos\\BradJB132\\ReallyBigNumbersGPU\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Brad\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\bjbau\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -59,8 +59,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -69,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

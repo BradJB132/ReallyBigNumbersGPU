@@ -26,7 +26,6 @@ namespace ReallyBigNumbersGPU
 
         public int GenerateBigNumber(String fileName, long sizeMB)
         {
-
             if(File.Exists(fileName))
             {
                 return 0;
@@ -128,6 +127,35 @@ namespace ReallyBigNumbersGPU
             }
             return 1;
         } 
+
+        public int MultiplyBigNumber(String inFile1, String inFile2, String outFile)
+        {
+            if (File.Exists(outFile))
+            {
+                return 0;
+            }
+
+            StreamWriter streamWriter = new StreamWriter(outFile);
+
+            FileInfo info1 = new FileInfo(inFile1);
+            FileInfo info2 = new FileInfo(inFile2);
+
+            var biggerTemp = info1.Length >= info2.Length ? inFile1 : inFile2;
+            var smallerTemp = info1.Length < info2.Length ? inFile1 : inFile2;
+
+            StreamReader bigReader = new StreamReader(biggerTemp);
+            StreamReader smallReader = new StreamReader(smallerTemp);
+
+            FileInfo bigInfo = new FileInfo(biggerTemp);
+            FileInfo smallInfo = new FileInfo(smallerTemp);
+
+            MemoryBuffer1D<long, Stride1D.Dense> bigNumber;
+            MemoryBuffer1D<long, Stride1D.Dense> smallNumber;
+            MemoryBuffer1D<long, Stride1D.Dense> outNumber;
+
+            return 1;
+
+        }
 
         private long[] rightShift(long[] arr)
         {

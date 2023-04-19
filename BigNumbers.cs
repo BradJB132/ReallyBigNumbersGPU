@@ -24,7 +24,7 @@ namespace ReallyBigNumbersGPU
             this.accelerator = accelerator;
         }
 
-        public int GenerateBigNumber(String fileName, long sizeKB)
+        public int GenerateBigNumber(String fileName, long sizeMB)
         {
 
             if(File.Exists(fileName))
@@ -39,7 +39,7 @@ namespace ReallyBigNumbersGPU
 
             using var buffer = accelerator.Allocate1D<long>(MAX_VAR_SIZE);
             long sizeGuess = 0;
-            while (sizeGuess < sizeKB * 1000000)
+            while (sizeGuess < sizeMB * 1000000)
             {
                 rng.FillUniform(accelerator.DefaultStream, buffer.View);
                 var randValues = buffer.GetAsArray1D();

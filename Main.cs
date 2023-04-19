@@ -38,7 +38,7 @@ namespace ReallyBigNumbersGPU
             //String number3 = "C:\\Users\\bjbau\\Desktop\\number3.txt";
             Stopwatch stopwatch = Stopwatch.StartNew();
             BigNumbers bigNumbers = new BigNumbers(accelerator);
-            bigNumbers.GenerateBigNumber(number1, 1);
+            bigNumbers.GenerateBigNumber(number1, 1500);
             //bigNumbers.GenerateBigNumber(number2, 1);
             //bigNumbers.AddBigNumber(number1, number2, number3);
             
